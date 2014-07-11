@@ -29,19 +29,19 @@ class BXVector  {
   ~BXVector();
 
   // assignment operator (pass by value for exception safety)
-  //BXVector operator=( BXVector vector );
+  BXVector operator=( BXVector vector );
 
   // the methods given below are a minimal set
   // other methods from the std::vector interface can be replicated as desired
 
   // set BX range
-  //void setBXRange( int bxFirst, int bxLast );
+  void setBXRange( int bxFirst, int bxLast );
 
   // set size for a given BX
-  //void resize( int bx, int size );
+  void resize( int bx, int size );
 
   // set size for all BXs
-  //void resizeAll( int size );
+  void resizeAll( int size );
 
   // get the first BX stored
   int getFirstBX() const;
@@ -50,22 +50,22 @@ class BXVector  {
   int getLastBX() const;
 
   // get N objects for a given BX
-  //unsigned size( int bx ) const;
+  unsigned size( int bx ) const;
 
   // add element with given BX index
-  //void push_back( int bx, T object );
+  void push_back( int bx, T object );
 
   // clear member
-  //void clear();
+  void clear();
 
   // random access
-  //const T& at( int bx, int i ) const;
+  const T& at( int bx, int i ) const;
 
   // iterator access by BX
-  //const_iterator begin( int bx ) const;
+  const_iterator begin( int bx ) const;
 
   // iterator access by BX
-  //const_iterator end( int bx ) const;
+  const_iterator end( int bx ) const;
 
  private:
 

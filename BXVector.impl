@@ -37,7 +37,7 @@ BXVector<T>::~BXVector()
 //
 //}
 
-/*
+
 // set BX range
 template < class T >
 void BXVector<T>::setBXRange( int bxFirst, int bxLast )
@@ -51,7 +51,8 @@ void BXVector<T>::setBXRange( int bxFirst, int bxLast )
 template < class T >
 void BXVector<T>::resize( int bx, int size )
 {
-  data_.at(indexFromBX(bx)).resize(size);
+  //data_.at(indexFromBX(bx)).resize(size);
+  
 }
 
 // set size for all BXs
@@ -81,14 +82,40 @@ int BXVector<T>::getLastBX() const
 template < class T >
 unsigned BXVector<T>::size( int bx ) const
 {
-  return data_.at(indexFromBX(bx)).size();
+ // return data_.at(indexFromBX(bx)).size();//whats up mike?why?
+ //added by team UCD 
+ if(itrs_.size()==1)
+  {return data_.size();}
+ else{
+   if(indexFromBX(bx)==itrs_.size() -1){
+     return (data_.end() - itrs_[indexFromBX(bx)]);
+   }
+   else{
+     return (itrs_[indexFromBX(bx+1)] - itrs_[indexFromBX(bx)]);
+   }
+ }
 }
+
 
 // add element with given BX index
 template < class T >
 void BXVector<T>::push_back( int bx, T object )
 {
-  data_.at(indexFromBX(bx)).push_back(object);
+  //data_.at(indexFromBX(bx)).push_back(object);
+ //added by team UCD 
+ int sizer;
+ if(itrs_.size()==1)
+  {sizer = data_.size();}
+ else{
+   if(indexFromBX(bx)==itrs_.size() -1){
+     sizer = (data_.end() - itrs_[indexFromBX(bx)]);
+   }
+   else{
+     sizer = (itrs_[indexFromBX(bx+1)] - itrs_[indexFromBX(bx)]);
+   }
+ }
+	data_.insert(itrs_[indexFromBX(bx)] - data_.begin() + sizer,T);
+
 }
 
 // add clear member
@@ -118,7 +145,7 @@ typename BXVector<T>::const_iterator BXVector<T>::end( int bx ) const
 {
   return data_.at(indexFromBX(bx)).end();
 }
-*/
+
 
 template < class T >
 unsigned BXVector<T>::indexFromBX(int bx) const
