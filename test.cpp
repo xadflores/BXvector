@@ -1,20 +1,23 @@
 #include "BXVector.h"
-#include "iostream"
+#include <iostream>
 
 using namespace std;
 
 main(){
    
+   BXVector<int> x(5,0,4);
+   int k=1;  
+for(int b=0; b<=4; b++)
+        {
+        cout<<b<<'\t'<< x.size(b) <<endl;
+        }
 
-   BXVector<int> x(3,2,4);
-//   cout<< x.getLastBX()<<endl;
 
-   for(int b=2; b<=4; b++)
+   x.push_back(1,k);
+
+   for(int b=0; b<=4; b++)
 	{
 	cout<<b<<'\t'<< x.size(b) <<endl;
-	cout<<x.push_back(3,"int")<<endl;
 	}  
-   
-
 
 }

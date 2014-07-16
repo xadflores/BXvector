@@ -1,5 +1,6 @@
-
 #include <vector>
+#include <iostream>
+using namespace std;
 
 template < class T >
 BXVector<T>::BXVector( int size,      // number of objects per BX
@@ -82,14 +83,21 @@ int BXVector<T>::getLastBX() const
 template < class T >
 unsigned BXVector<T>::size( int bx ) const
 {
- // return data_.at(indexFromBX(bx)).size();//whats up mike?why?
+ // return data_.at(indexFromBX(bx)).size();
+
  //added by team UCD 
+
  if(itrs_.size()==1)
   {return data_.size();}
  else{
-   if(indexFromBX(bx)==itrs_.size() -1){
-     return (data_.end() - itrs_[indexFromBX(bx)]);
+    
+//cout<<"testShit "<<itrs_[indexFromBX(bx)]-data_.begin()<<endl;
+
+   if(indexFromBX(bx)==(itrs_.size() -1)){
+   
+   return (data_.end() - itrs_[indexFromBX(bx)]);
    }
+   
    else{
      return (itrs_[indexFromBX(bx+1)] - itrs_[indexFromBX(bx)]);
    }
@@ -101,21 +109,28 @@ unsigned BXVector<T>::size( int bx ) const
 template < class T >
 void BXVector<T>::push_back( int bx, T object )
 {
-  //data_.at(indexFromBX(bx)).push_back(object);
- //added by team UCD 
- int sizer;
- if(itrs_.size()==1)
-  {sizer = data_.size();}
- else{
-   if(indexFromBX(bx)==itrs_.size() -1){
-     sizer = (data_.end() - itrs_[indexFromBX(bx)]);
-   }
-   else{
-     sizer = (itrs_[indexFromBX(bx+1)] - itrs_[indexFromBX(bx)]);
-   }
- }
-	data_.insert(itrs_[indexFromBX(bx)] - data_.begin() + sizer,T);
+   //data_.at(indexFromBX(bx)).push_back(object);
 
+   //added by team UCD 
+  if(indexFromBX(bx)==itrs_.size() -1){
+    data_.push_back(object);
+  }
+  else{
+      cout<<"data: "<<data_.size()<<endl;
+      data_.insert(itrs_[indexFromBX(bx+1)],object);
+      //typedef typename std::vector<T>::iterator a;
+      //a = itrs_.at(indexFromBX(bx));
+      //itrs_ = data_.begin();
+      //data_.insert(a,1);
+      cout<<"dataNew: "<<data_.size()<<endl;
+  }
+  for(int k=0; k<itrs_.size();k++){
+     if(k >indexFromBX(bx)){
+        itrs_[k]++;
+//	cout<<"testShit2 "<<itrs_[k]-data_.end()<<endl;
+     }
+  }
+ 
 }
 
 // add clear member
