@@ -12,10 +12,9 @@ for(int b=0; b<=4; b++)
         cout<<b<<'\t'<< x.size(b) <<endl;
         }
 
-
-   x.push_back(1,k);
-
-   for(int b=0; b<=4; b++)
+   x.clear();
+   //x.push_back(1,k);
+  for(int b=0; b<=4; b++)
 	{
 	cout<<b<<'\t'<< x.size(b) <<endl;
 	}  

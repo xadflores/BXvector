@@ -58,6 +58,8 @@ class BXVector  {
   // clear member
   void clear();
 
+  void clearBX(int bx);
+
   // random access
   const T& at( int bx, int i ) const;
 
@@ -67,12 +69,16 @@ class BXVector  {
   // iterator access by BX
   const_iterator end( int bx ) const;
 
+  
+
  private:
 
   // this method converts integer BX index into an unsigned index
   // used by the internal data representation
   unsigned indexFromBX(int bx) const;
-
+  
+  // check if data has empty location
+  bool isEmpty(int bx) const;
 
  private:
 
@@ -93,8 +99,8 @@ class BXVector  {
   // but handling the start/end points for each BX is more complex
   // a second vector is needed to store pointers into the first one
   std::vector< T > data_;
-  std::vector< iterator > itrs_;
-
+  //std::vector< iterator > itrs_;
+  std::vector<int> itrs_;
 };
 
 #include "BXVector.impl"

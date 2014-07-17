@@ -13,7 +13,7 @@ BXVector<T>::BXVector( int size,      // number of objects per BX
 {
    itrs_.clear();
    for (int i=0; i<=(bxLast - bxFirst); i++){ 
-      itrs_.push_back(data_.begin() + i*size);
+      itrs_.push_back(i*size);
    }
 }
 
@@ -84,24 +84,19 @@ template < class T >
 unsigned BXVector<T>::size( int bx ) const
 {
  // return data_.at(indexFromBX(bx)).size();
-
  //added by team UCD 
 
- if(itrs_.size()==1)
-  {return data_.size();}
- else{
-    
-//cout<<"testShit "<<itrs_[indexFromBX(bx)]-data_.begin()<<endl;
+   if(isEmpty(bx)){return 0;}
 
-   if(indexFromBX(bx)==(itrs_.size() -1)){
+   if(indexFromBX(bx)==(itrs_.size() -1))
+     {
+     return (data_.size() - itrs_[itrs_.size()-1]);
+     }
    
-   return (data_.end() - itrs_[indexFromBX(bx)]);
-   }
-   
-   else{
+   else
+     {
      return (itrs_[indexFromBX(bx+1)] - itrs_[indexFromBX(bx)]);
-   }
- }
+     }
 }
 
 
@@ -116,30 +111,52 @@ void BXVector<T>::push_back( int bx, T object )
     data_.push_back(object);
   }
   else{
-      cout<<"data: "<<data_.size()<<endl;
-      data_.insert(itrs_[indexFromBX(bx+1)],object);
-      //typedef typename std::vector<T>::iterator a;
-      //a = itrs_.at(indexFromBX(bx));
-      //itrs_ = data_.begin();
-      //data_.insert(a,1);
-      cout<<"dataNew: "<<data_.size()<<endl;
+      data_.insert(data_.begin() + itrs_[indexFromBX(bx+1)],object);
   }
   for(int k=0; k<itrs_.size();k++){
      if(k >indexFromBX(bx)){
         itrs_[k]++;
-//	cout<<"testShit2 "<<itrs_[k]-data_.end()<<endl;
      }
   }
  
 }
+
 
 // add clear member
 template < class T >
 void BXVector<T>::clear()
 {
   data_.clear();
+  for(int k=0; k<itrs_.size();k++)
+     {
+        itrs_[k]=0;
+     }
 }
 
+// add clear member for given bx
+template < class T >
+void BXVector<T>::clearBX(int bx)
+{
+  int erased;
+  if (isEmpty(bx)==false)
+  {
+   if (data_.size()==itrs_[indexFromBX(bx)]-1)
+     {
+     data_.erase(data_.begin()+itrs_[indexFromBX(bx)],data_.end());
+     erased = data_.size() - itrs_[indexFromBX(bx)];
+     }
+   else 
+     {
+     data_.erase(data_.begin()+itrs_[indexFromBX(bx)],data_.begin()+itrs_[indexFromBX(bx+1)]);
+     erased = itrs_[indexFromBX(bx+1)] - itrs_[indexFromBX(bx)];
+     }
+   for(int k=0; k<itrs_.size();k++){
+     if(k >indexFromBX(bx)){
+        itrs_[k] = itrs_[k] - erased;
+     }
+  }
+   }
+}
 // random access
 template < class T >
 const T& BXVector<T>::at( int bx, int i ) const
@@ -168,3 +185,23 @@ unsigned BXVector<T>::indexFromBX(int bx) const
   return bx - bxFirst_;
 }
 
+template <class T>
+bool BXVector<T>::isEmpty(int bx) const
+{
+if (itrs_[indexFromBX(bx)]==itrs_.size()-1)
+   {
+     if ((data_.size()-1)==itrs_[indexFromBX(bx)])      
+        {
+	return true;
+	}
+   }
+
+else
+   {
+     if (itrs_[indexFromBX(bx)]==itrs_[indexFromBX(bx+1)])
+        {
+         return true;
+        }
+   }
+return false;
+}
