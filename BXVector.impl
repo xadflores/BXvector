@@ -53,15 +53,20 @@ template < class T >
 void BXVector<T>::resize( int bx, int size )
 {
   //data_.at(indexFromBX(bx)).resize(size);
-  
+
+  int k;
+  clearBX(bx);
+  for (int i = 0;i<size;i++){
+    push_back(bx,k);
+  }
 }
 
 // set size for all BXs
 template < class T >
 void BXVector<T>::resizeAll( int size )
 {
-  for (unsigned i=0; i<data_.size(); ++i) {
-    data_.at(i).resize(size);
+  for (unsigned i=0; i<itrs_.size(); ++i) {
+    resize(i,size);
   }
 }
 
@@ -140,7 +145,7 @@ void BXVector<T>::clearBX(int bx)
   int erased;
   if (isEmpty(bx)==false)
   {
-   if (data_.size()==itrs_[indexFromBX(bx)]-1)
+   if (indexFromBX(bx) == itrs_.size() -1)
      {
      data_.erase(data_.begin()+itrs_[indexFromBX(bx)],data_.end());
      erased = data_.size() - itrs_[indexFromBX(bx)];
