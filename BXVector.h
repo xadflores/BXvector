@@ -42,6 +42,12 @@ class BXVector  {
 
   // set size for all BXs
   void resizeAll( int size );
+  
+  // add one BX to end of BXVector
+  void addBX();
+
+  // delete given bunch crossing
+  void deleteBX(int bx);
 
   // get the first BX stored
   int getFirstBX() const;
@@ -49,27 +55,36 @@ class BXVector  {
   // get the last BX stored
   int getLastBX() const;
 
+  // iterator access by BX
+  unsigned begin( int bx ) const;
+
+  // iterator access by BX
+  unsigned end( int bx ) const;
+
   // get N objects for a given BX
   unsigned size( int bx ) const;
 
   // add element with given BX index
   void push_back( int bx, T object );
+ 
+  // erase element with given location 
+  void erase( int bx, int i);
+  
+  // insert element with given location
+  void insert( int bx, int i, T object );
 
-  // clear member
+  // clear entire BXVector
   void clear();
 
+  // clear bx
   void clearBX(int bx);
 
-  // random access
+  // access element
   const T& at( int bx, int i ) const;
 
-  // iterator access by BX
-  const_iterator begin( int bx ) const;
+  // set element
+  void set( int bx, int i , T object);
 
-  // iterator access by BX
-  const_iterator end( int bx ) const;
-
-  
 
  private:
 
