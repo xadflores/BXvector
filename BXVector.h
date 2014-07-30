@@ -85,6 +85,8 @@ class BXVector  {
   // set element
   void set( int bx, int i , T object);
 
+  // check if data has empty location
+  bool isEmpty(int bx) const;
 
  private:
 
@@ -92,8 +94,6 @@ class BXVector  {
   // used by the internal data representation
   unsigned indexFromBX(int bx) const;
   
-  // check if data has empty location
-  bool isEmpty(int bx) const;
 
  private:
 
